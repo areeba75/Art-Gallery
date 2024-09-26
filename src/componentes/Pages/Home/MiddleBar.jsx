@@ -10,7 +10,7 @@ const MiddleBar = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [responsiveMenu, setResponsiveMenu] = useState(false);
   const SearchInOurStore = (e) => {
-    e.preventDefault;
+    // e.preventDefault;
     setOpenSearch(!openSearch);
   };
   return (
@@ -42,12 +42,12 @@ const MiddleBar = () => {
           />
           {responsiveMenu ? (
             <MdClose
-              onClick={() => setResponsiveMenu(!responsiveMenu)}
-              className="block lg:hidden text-3xl text-[#F6C936]"
+              onClick={() => setResponsiveMenu(false)}
+              className=" text-3xl text-[#F6C936]"
             />
           ) : (
             <IoMenu
-              onClick={() => setResponsiveMenu(!responsiveMenu)}
+              onClick={() => setResponsiveMenu(true)}
               className="block lg:hidden text-3xl text-[#F6C936]"
             />
           )}
@@ -69,7 +69,7 @@ const MiddleBar = () => {
         </div>
       </div>
 
-      <div className="block lg:hidden">{responsiveMenu && <ResponsiveMenuBar />}</div>
+      <div className="block lg:hidden">{responsiveMenu && <ResponsiveMenuBar closeMenu={() => setResponsiveMenu(false)} />}</div>
     </nav>
   );
 };

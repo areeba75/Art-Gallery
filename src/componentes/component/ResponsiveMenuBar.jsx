@@ -8,7 +8,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 
 
-const ResponsiveMenuBar = () => {
+const ResponsiveMenuBar = ({ closeMenu }) => {
   const [activeIndex, setActiveIndex] = useState(null);
 const [activeSubIndex, setActiveSubIndex] = useState(null);
 const [menuOpen, setMenuOpen] = useState(true);
@@ -19,7 +19,8 @@ const handleItemClick = (index, itemName) => {
 
   if (itemName !== 'Services') {
     setMenuOpen(false);
-    setSubMenu(false);  
+    setSubMenu(false); 
+    closeMenu();
   }
 };
 
@@ -42,19 +43,21 @@ const openSubMenu = () => {
     <ul>
       {menu.map((item, index) => (
         <li key={index} className="border-b py-6">
-          <div>
+          <div className='flex justify-between'>
             <Link
-              onClick={() => handleItemClick(index, item.name)}
+              onClick={() => {handleItemClick(index, item.name);  setMenuOpen(false); closeMenu()}}
               className={`${activeIndex === index ? 'text-yellow-500' : 'text-white'} flex justify-between`}
               to={item.to}
             >
               {item.name}
-              {item.name === 'Services' && (
-                <span>
-                  <IoIosArrowForward onClick={openSubMenu} />
-                </span>
-              )}
             </Link>
+             <div>
+              {item.name === 'Services' && (
+                  <span>
+                    <IoIosArrowForward onClick={openSubMenu} className='text-2xl'/>
+                  </span>
+                )}
+             </div>
           </div>
         </li>
       ))}
@@ -73,13 +76,13 @@ const openSubMenu = () => {
       <div>
         <ul className="text-base">
           <div className="text-white border-b flex items-center text-xl py-6 p-3">
-            <MdArrowBackIos onClick={() => setSubMenu(false)} />
+            <MdArrowBackIos onClick={() => {setSubMenu(false); setMenuOpen(true)}} className='text-yellow-500'/>
             <li className="m-auto">Services</li>
           </div>
           {submenu.map((subItem, subIndex) => (
             <li key={subIndex} className="border-b py-6 px-4">
               <Link
-                onClick={() => handleSubItemClick(subIndex)}
+                onClick={() => {handleSubItemClick(subIndex); closeMenu()}}
                 className={`${activeSubIndex === subIndex ? 'text-yellow-500' : 'text-white'}`}
                 to={subItem.to}
               >
